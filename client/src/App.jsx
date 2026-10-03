@@ -9,6 +9,9 @@ import AdminPortal from './pages/auth/AdminPortal'
 import AdminSignup from './pages/auth/AdminSignup'
 import ForgotPassword from './pages/auth/ForgotPassword'
 
+// Landing page
+import Home from './pages/Home'
+
 // Shared
 import Notifications from './pages/Notifications'
 
@@ -46,7 +49,7 @@ function RootRedirect() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
 
       {/* Admin Portal Gateway: Login & Admin Account Creation */}

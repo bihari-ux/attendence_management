@@ -1,0 +1,728 @@
+/* ========================================================
+   Nexora Cyber Gold Authentication Design System
+   Inspired by futuristic cyberpunk glassmorphism & gold accents
+   ======================================================== */
+
+.cyber-auth-root {
+  --gold: #ffc61a;
+  --gold2: #e8a400;
+  --gold3: #ffd43b;
+  --gold-glow: rgba(255, 198, 26, 0.22);
+  --text: #f4f4f5;
+  --muted: #9a9aa2;
+  --muted-dark: #63636e;
+  --bg: #0a0a0c;
+  --card-border: rgba(255, 255, 255, 0.13);
+  --field-bg: rgba(0, 0, 0, 0.42);
+  font-family: 'Sora', 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Split Layout Extensions */
+.cyber-split-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  gap: 40px;
+  z-index: 10;
+  position: relative;
+}
+
+.cyber-split-form {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cyber-split-brand {
+  flex: 1;
+  display: none; /* hidden on mobile */
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+@media (min-width: 900px) {
+  .cyber-split-brand {
+    display: flex;
+  }
+}
+
+/* A majestic 3D element placeholder */
+.cyber-3d-element {
+  width: 100%;
+  max-width: 480px;
+  height: 480px;
+  background: rgba(255, 198, 26, 0.05);
+  border: 1px solid rgba(255, 198, 26, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 80px rgba(255, 198, 26, 0.15), inset 0 0 40px rgba(255, 198, 26, 0.1);
+  backdrop-filter: blur(10px);
+  transform: rotateY(-15deg) rotateX(10deg);
+  animation: cyberFloat3D 6s ease-in-out infinite alternate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-3d-element::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(255,198,26,0.3) 180deg, transparent 360deg);
+  animation: cyberSpin3D 10s linear infinite;
+}
+
+.cyber-3d-element::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: #0a0a0c;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+.cyber-3d-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--gold);
+}
+
+.cyber-3d-content svg {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 0 20px var(--gold));
+  margin-bottom: 20px;
+}
+
+.cyber-3d-content h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.cyber-3d-content p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@keyframes cyberFloat3D {
+  0% { transform: rotateY(-15deg) rotateX(10deg) translateY(0px); }
+  100% { transform: rotateY(-10deg) rotateX(15deg) translateY(-20px); }
+}
+
+@keyframes cyberSpin3D {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Background canvas with vector golden curves */
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at 20% 10%, #2a2a30 0%, transparent 55%),
+              radial-gradient(ellipse at 90% 100%, #1c1c21 0%, transparent 50%),
+              #08080a;
+  pointer-events: none;
+}
+
+.cyber-bg svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+/* Main Auth Floating Card Wrap */
+.cyber-wrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.85));
+}
+
+/* Frosted Floating Triangles at Corners */
+.cyber-tri {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+  border: 0;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 12;
+  pointer-events: none;
+  animation: triIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards,
+             triFloat 3.5s ease-in-out 0.7s infinite alternate;
+}
+
+.cyber-tri.tl {
+  top: -4px;
+  left: -4px;
+  --d: -1;
+  clip-path: path('M6 0L38 0Q44 0 39.76 4.24L4.24 39.76Q0 44 0 38L0 6Q0 0 6 0Z');
+}
+
+.cyber-tri.br {
+  bottom: -4px;
+  right: -4px;
+  --d: 1;
+  clip-path: path('M38 44L6 44Q0 44 4.24 39.76L39.76 4.24Q44 0 44 6L44 38Q44 44 38 44Z');
+}
+
+@keyframes triIn {
+  from {
+    opacity: 0;
+    transform: translate(calc(var(--d) * 28px), calc(var(--d) * 28px)) scale(0.3) rotate(calc(var(--d) * -20deg));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes triFloat {
+  to {
+    transform: translate(calc(var(--d) * 4px), calc(var(--d) * 4px));
+  }
+}
+
+/* Angled Cut Polygon Glass Card */
+.cyber-card {
+  position: relative;
+  width: 100%;
+  clip-path: polygon(42px 0, 100% 0, 100% calc(100% - 42px), calc(100% - 42px) 100%, 0 100%, 0 42px);
+  padding: 32px 28px 26px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Brand Header */
+.cyber-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cyber-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cyber-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #141000;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 16px rgba(255, 198, 26, 0.5);
+}
+
+.cyber-brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+/* Cluster & Load Balancer Live Pill */
+.cyber-cluster-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  font-size: 10px;
+  font-weight: 600;
+  color: #34d399;
+  letter-spacing: 0.2px;
+}
+
+.cyber-cluster-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: cyberPulse 2s infinite;
+}
+
+@keyframes cyberPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Segmented Role Switcher */
+.cyber-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+
+.cyber-tab-btn {
+  background: none;
+  border: 0;
+  outline: 0;
+  padding: 7px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+}
+
+.cyber-tab-btn.active {
+  background: linear-gradient(135deg, rgba(255, 198, 26, 0.18), rgba(255, 198, 26, 0.08));
+  color: var(--gold);
+  border: 1px solid rgba(255, 198, 26, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.cyber-tab-btn:hover:not(.active) {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Form Titles & Captions */
+.cyber-title {
+  font-size: 24px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+
+.cyber-title span {
+  color: var(--gold);
+  text-shadow: 0 0 16px rgba(255, 198, 26, 0.3);
+}
+
+.cyber-sub {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 5px 0 16px;
+  line-height: 1.4;
+}
+
+/* 1-Click Fast Login Bar */
+.cyber-demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.cyber-demo-bar::-webkit-scrollbar { display: none; }
+
+.cyber-demo-pill {
+  flex: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e4e4e7;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.cyber-demo-pill:hover {
+  background: rgba(255, 198, 26, 0.15);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* Input Fields */
+.cyber-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: #d4d4d8;
+}
+
+.cyber-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--field-bg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+}
+
+.cyber-field:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255, 198, 26, 0.2);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.cyber-field.highlighted {
+  border-color: rgba(255, 198, 26, 0.65);
+  background: rgba(255, 198, 26, 0.08);
+}
+
+.cyber-field.has-error {
+  border-color: #ff5a5f;
+  background: rgba(255, 90, 95, 0.08);
+}
+
+.cyber-field svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cyber-field input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.cyber-field input::placeholder {
+  color: #6d6d75;
+}
+
+.cyber-eye {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+
+.cyber-eye:hover {
+  color: #ffffff;
+}
+
+.cyber-eye svg {
+  stroke: currentColor;
+}
+
+/* Caps lock warning badge */
+.cyber-caps-warning {
+  font-size: 10px;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Password Strength Bar */
+.cyber-strength-meter {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cyber-strength-seg {
+  height: 3px;
+  flex: 1;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.3s ease;
+}
+
+.cyber-strength-seg.weak { background: #ef4444; }
+.cyber-strength-seg.fair { background: #f59e0b; }
+.cyber-strength-seg.good { background: #3b82f6; }
+.cyber-strength-seg.strong { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
+.cyber-row2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+/* Options Bar (Remember Me & Forgot Password) */
+.cyber-opts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cyber-opts label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cyber-opts input[type="checkbox"] {
+  accent-color: var(--gold);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.cyber-opts a, .cyber-link {
+  color: var(--gold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.cyber-opts a:hover, .cyber-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+/* Primary Submit Button */
+.cyber-primary {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  color: #1a1300;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ffd43b, var(--gold2));
+  box-shadow: 0 8px 24px rgba(255, 190, 0, 0.35);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cyber-primary:hover:not(:disabled) {
+  transform: translateY(-1.5px);
+  box-shadow: 0 12px 30px rgba(255, 190, 0, 0.55);
+  background: linear-gradient(180deg, #ffe066, #f0ac00);
+}
+
+.cyber-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.cyber-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Message Feedback */
+.cyber-msg {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+  min-height: 18px;
+  color: #7ee787;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cyber-msg.bad {
+  color: #ff7b7f;
+}
+
+/* Divider */
+.cyber-or {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cyber-or:before, .cyber-or:after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Social Buttons */
+.cyber-soc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cyber-soc button {
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.cyber-soc button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.cyber-soc svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bottom Switcher */
+.cyber-sw {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+/* Location Status Micro Pill */
+.cyber-location-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: rgba(255, 198, 26, 0.85);
+  margin-top: 12px;
+  opacity: 0.85;
+}
+
+/* Staggered Animations */
+@keyframes pop {
+  from { opacity: 0; transform: translateX(30px) scale(0.97); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes popb {
+  from { opacity: 0; transform: translateX(-30px) scale(0.97); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.cyber-enter {
+  animation: pop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cyber-back {
+  animation: popb 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cyber-enter > * {
+  animation: rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 40ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-tri, .cyber-enter, .cyber-back, .cyber-enter > * {
+    animation: none !important;
+  }
+}
+
+/* Modal for inline Forgot Password */
+.cyber-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: cyberModalFade 0.25s ease;
+}
+
+@keyframes cyberModalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cyber-modal-card {
+  width: 100%;
+  max-width: 380px;
+  background: #121217;
+  border: 1px solid rgba(255, 198, 26, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 198, 26, 0.15);
+}

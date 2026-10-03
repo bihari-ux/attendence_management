@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Users, CalendarCheck, ListChecks, CalendarDays,
   FileBarChart, Settings, LogOut, ChevronLeft, ChevronRight,
-  Timer, User, ClipboardList, Shield, Zap, History,
+  Timer, User, ClipboardList, Shield, Zap, History, Home
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import Avatar from '../common/Avatar'
@@ -75,6 +75,21 @@ export default function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-0.5">
+        <NavLink
+          to="/"
+          title={collapsed ? 'Back to Website' : undefined}
+          className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 mb-6 text-sm font-extrabold transition-all duration-300 hover:-translate-y-0.5 active:scale-95 ${collapsed ? 'justify-center' : ''}`}
+          style={{
+            background: 'linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%)',
+            color: '#ffffff',
+            boxShadow: '0 4px 14px rgba(45, 212, 191, 0.3)',
+            textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+          }}
+        >
+          <Home size={18} className="shrink-0 text-white drop-shadow-sm" />
+          {!collapsed && <span className="tracking-wide uppercase text-[12px]">Back to Website</span>}
+        </NavLink>
+
         {links.map((link) => (
           <NavLink
             key={link.to}
@@ -124,6 +139,7 @@ export default function Sidebar() {
             </div>
           </div>
         )}
+
         <button
           onClick={logout}
           title={collapsed ? 'Logout' : undefined}

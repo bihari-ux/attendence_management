@@ -2,35 +2,51 @@ const asyncHandler = require('../utils/asyncHandler');
 const generateToken = require('../utils/generateToken');
 const User = require('../models/User');
 
-// @desc   Initial admin signup (system setup)
+// @desc   User signup (Admin setup if first user, else Employee registration)
 // @route  POST /api/auth/signup
 const signupAdmin = asyncHandler(async (req, res) => {
-  const { fullName, email, password, phone } = req.body;
-
-  const adminExists = await User.findOne({ role: 'admin' });
-  if (adminExists) {
-    res.status(400);
-    throw new Error('Admin account already exists. Please login instead.');
-  }
+  const { fullName, email, password, phone, rolePreference } = req.body;
 
   const emailExists = await User.findOne({ email: email.toLowerCase() });
   if (emailExists) {
     res.status(400);
-    throw new Error('Email already registered');
+    throw new Error('Email already registered. Please sign in instead.');
   }
 
-  const employeeId = 'ADM' + Date.now().toString().slice(-6);
+  const adminExists = await User.findOne({ role: 'admin' });
+  let assignedRole = 'employee';
+  let employeeId = 'EMP' + Math.floor(100000 + Math.random() * 900000);
+  let designation = 'Team Member';
 
-  const admin = await User.create({
-    fullName, email, phone, password, role: 'admin',
-    employeeId, designation: 'Administrator', status: 'active',
+  if (!adminExists || rolePreference === 'admin') {
+    if (!adminExists) {
+      assignedRole = 'admin';
+      employeeId = 'ADM' + Date.now().toString().slice(-6);
+      designation = 'Administrator';
+    } else {
+      res.status(400);
+      throw new Error('An administrator already exists. Please sign in or register as an employee.');
+    }
+  }
+
+  const user = await User.create({
+    fullName: fullName.trim(),
+    email: email.toLowerCase().trim(),
+    phone: phone || '',
+    password,
+    role: assignedRole,
+    employeeId,
+    designation,
+    status: 'active',
   });
 
   res.status(201).json({
     success: true,
-    message: 'Admin account created successfully',
-    token: generateToken(admin._id, admin.role),
-    user: admin.toSafeObject(),
+    message: assignedRole === 'admin' 
+      ? 'Master Admin account initialized successfully!' 
+      : `Account created successfully! Your Employee ID is ${employeeId}.`,
+    token: generateToken(user._id, user.role),
+    user: user.toSafeObject(),
   });
 });
 

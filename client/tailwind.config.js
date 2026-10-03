@@ -41,7 +41,7 @@ export default {
         'chart-grid':       'linear-gradient(180deg, transparent 0%, rgba(241,245,249,0.5) 100%)',
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         '2xl': '16px',

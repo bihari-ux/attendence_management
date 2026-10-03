@@ -8,7 +8,7 @@ export function PageLoader() {
         <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-indigo-600 animate-spin" />
         <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-violet-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.6s' }} />
       </div>
-      <p className="text-sm font-semibold text-slate-500">Loading Nexora...</p>
+      <p className="text-sm font-semibold text-slate-500">Loading AttendPro...</p>
     </div>
   )
 }
